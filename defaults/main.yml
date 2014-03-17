@@ -1,0 +1,4 @@
+# file: nodejs/defaults/main.yml
+
+nodejs_install_method: "package"
+nodejs_version: "0.10.26"

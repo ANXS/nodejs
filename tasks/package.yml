@@ -1,0 +1,16 @@
+# file: nodejs/tasks/package.yml
+
+- name: node.js | Make sure the ansible required dependencies are installed
+  apt:
+    pkg: python-pycurl
+    state: present
+
+- name: nodejs | Add the nodejs repository
+  apt_repository:
+    repo: repo=ppa:chris-lea/node.js
+    state: present
+
+- name: node.js | Install the node.js package
+  apt:
+    pkg: "nodejs={{nodejs_version}}"
+    state: present
