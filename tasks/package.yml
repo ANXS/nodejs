@@ -7,10 +7,10 @@
 
 - name: nodejs | Add the nodejs repository
   apt_repository:
-    repo: repo=ppa:chris-lea/node.js
+    repo: ppa:chris-lea/node.js
     state: present
 
 - name: node.js | Install the node.js package
   apt:
-    pkg: "nodejs={{nodejs_version}}"
+    pkg: "nodejs"
     state: present
