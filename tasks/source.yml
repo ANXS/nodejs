@@ -22,7 +22,6 @@
 - name: node.js | Build node.js from source
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&
-    PATH="/usr/local/bin:/usr/bin:bin" &&
     ./configure --prefix={{nodejs_prefix}} &&
     make -j {{cpu_count.stdout}} &&
     sudo make install
