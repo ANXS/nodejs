@@ -44,9 +44,3 @@
   with_items:
     - 'update-alternatives --install "/usr/bin/node" "node" "/usr/local/nodejs/default/bin/node" 1'
     - 'update-alternatives --set node /usr/local/nodejs/default/bin/node'
-
-- name: node.js | Inform the system where npm is located and set this one as the default
-  shell: "{{item}}"
-  with_items:
-    - 'update-alternatives --install "/usr/bin/npm" "npm" "/usr/local/nodejs/default/bin/npm" 1'
-    - 'update-alternatives --set npm /usr/local/nodejs/default/bin/npm'
