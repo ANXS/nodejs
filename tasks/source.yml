@@ -24,7 +24,7 @@
     cd /tmp/node-v{{nodejs_version}} &&
     PATH="/usr/local/bin:/usr/bin:bin" &&
     ./configure --prefix={{nodejs_prefix}} &&
-    sudo make -j {{cpu_count.stdout}} &&
+    make -j {{cpu_count.stdout}} &&
     sudo make install
 
 - name: node.js | Update the symbolic link to the node.js install
