@@ -22,9 +22,8 @@
 - name: node.js | Build node.js from source
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&
-    PATH="/usr/local/bin:/usr/bin:bin" &&
     ./configure --prefix={{nodejs_prefix}} &&
-    sudo make -j {{cpu_count.stdout}} &&
+    make -j {{cpu_count.stdout}} &&
     sudo make install
 
 - name: node.js | Update the symbolic link to the node.js install
@@ -45,9 +44,3 @@
   with_items:
     - 'update-alternatives --install "/usr/bin/node" "node" "/usr/local/nodejs/default/bin/node" 1'
     - 'update-alternatives --set node /usr/local/nodejs/default/bin/node'
-
-- name: node.js | Inform the system where npm is located and set this one as the default
-  shell: "{{item}}"
-  with_items:
-    - 'update-alternatives --install "/usr/bin/npm" "npm" "/usr/local/nodejs/default/bin/npm" 1'
-    - 'update-alternatives --set npm /usr/local/nodejs/default/bin/npm'
