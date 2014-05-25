@@ -12,5 +12,5 @@
 
 - name: node.js | Install the node.js package
   apt:
-    pkg: "nodejs"
+    pkg: nodejs={{nodejs_version}}
     state: present
