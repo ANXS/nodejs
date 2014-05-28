@@ -15,4 +15,5 @@ galaxy_info:
   - development
 
 dependencies:
-  - Ansibles.build-essential
+  - role: Ansibles.build-essential
+    when: nodejs_install_method is defined and nodejs_install_method == "source"
