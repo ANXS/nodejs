@@ -1,4 +1,4 @@
-## Ansibles - nodejs [![Build Status](https://travis-ci.org/mtpereira/nodejs.svg)](https://travis-ci.org/mtpereira/nodejs)
+## Ansibles - nodejs [![Build Status](https://travis-ci.org/Ansibles/nodejs.svg)](https://travis-ci.org/Ansibles/nodejs)
 
 Ansible role for installing nodejs, from package or by building it from source.
 
