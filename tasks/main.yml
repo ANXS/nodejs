@@ -2,5 +2,12 @@
 
 - include: package.yml
   when: nodejs_install_method == "package"
+
+- name: node.js | Check if node is installed and in the required version
+  command: node --version
+  ignore_errors: yes
+  register: node_version
+  changed_when: node_version.rc != 0 or node_version.stdout != "v{{ nodejs_version }}"
+
 - include: source.yml
-  when: nodejs_install_method == "source"
+  when: nodejs_install_method == "source" and node_version.changed
