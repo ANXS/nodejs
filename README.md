@@ -15,6 +15,9 @@ nodejs_install_method: "source"     # "package" or "source"
 nodejs_version: "0.10.26"           # nodejs version to install.
 ```
 
+#### Thanks to
+- [Manuel Tiago Pereira](https://github.com/mtpereira)
+
 
 #### License
 
