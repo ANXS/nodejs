@@ -1,10 +1,7 @@
 # file: nodejs/defaults/main.yml
 
-#nodejs_install_method     : "source"
-#nodejs_version            : "0.10.26"
-
-nodejs_install_method     : "binary"
-nodejs_version            : "0.11.13"
+nodejs_install_method     : "source"
+nodejs_version            : "0.10.26"
 
 nodejs_directory          : "/usr/local/nodejs"
 nodejs_source_url         : "http://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz"
