@@ -13,7 +13,10 @@
     dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
 
 - name: node.js | binary | Unpack the node.js package
-  unarchive: src="/tmp/node-v{{nodejs_version}}.tar.gz" dest="/usr/local/nodejs" copy=no
+  unarchive:
+    src :  "/tmp/node-v{{nodejs_version}}.tar.gz"
+    dest : "/usr/local/nodejs"
+    copy : no
 
 - name: node.js | binary | Update the symbolic link to the node.js install
   file:
