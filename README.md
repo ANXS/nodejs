@@ -11,8 +11,15 @@ Ansible role for installing nodejs, from package or by building it from source.
 #### Variables
 
 ```yaml
-nodejs_install_method: "source"     # "package" or "source"
 nodejs_version: "0.10.26"           # nodejs version to install.
+nodejs_install_method: "source"     # "package" or "source" or "binary"
+```
+
+For "unstable" node versions (0.11), you may wish to use "binary" if you don't want to compile from source:
+
+```yaml
+nodejs_version: "0.11.13"           # nodejs version to install.
+nodejs_install_method: "binary"     # "source" or "binary" (package is not available for 0.11)
 ```
 
 #### Thanks to

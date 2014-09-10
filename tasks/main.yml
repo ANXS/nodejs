@@ -8,7 +8,10 @@
   ignore_errors: yes
   register: node_version
   changed_when: node_version.rc != 0 or node_version.stdout != "v{{ nodejs_version }}"
-  when: nodejs_install_method == "source"
+  when: nodejs_install_method == "source" or nodejs_install_method == "binary"
 
 - include: source.yml
   when: nodejs_install_method == "source" and node_version.changed
+
+- include: binary.yml
+  when: nodejs_install_method == "binary" and node_version.changed

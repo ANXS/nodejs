@@ -1,52 +1,36 @@
 # file: nodejs/tasks/source.yml
 
-- name: node.js | Make sure that the directory to hold the node.js binaries exists
+- name: node.js | source | Make sure that the directory to hold the node.js binaries exists
   file:
-    path: /usr/local/nodejs
+    path: "{{nodejs_directory}}"
     state: directory
     recurse: yes
     mode: 0755
 
-- name: node.js | Download the node.js source
+- name: node.js | source | Download the node.js source
   get_url:
     url: "{{nodejs_url}}"
     dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
 
-- name: node.js | Unpack the node.js source
+- name: node.js | source | Unpack the node.js source
   shell: tar -xvzf /tmp/node-v{{nodejs_version}}.tar.gz chdir=/tmp creates=/tmp/node-v{{nodejs_version}}
 
-- name: node.js | Get the number of processors
+- name: node.js | source |Get the number of processors
   command: nproc
   register: cpu_count
 
-- name: node.js | Build node.js from source
+- name: node.js | source | Build node.js from source
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&
-    ./configure --prefix={{nodejs_prefix}} &&
+    ./configure --prefix={{nodejs_source_prefix}} &&
     make -j {{cpu_count.stdout}} &&
     sudo make install
 
-- name: node.js | Update the symbolic link to the node.js install
+- name: node.js | source | Update the symbolic link to the node.js install
   file:
-    path: /usr/local/nodejs/default
-    src: "{{nodejs_prefix}}"
+    path: "{{nodejs_directory}}/default"
+    src: "{{nodejs_source_prefix}}"
     state: link
     force: yes
 
-- name: node.js | Add the node.js binary to the system path
-  lineinfile: "dest={{item.dest}} regexp={{item.regexp}} line={{item.line}} state={{item.state}}"
-  with_items:
-    - { dest: "/etc/profile", regexp: "^NODE_HOME=/usr/local/nodejs/default", line: "NODE_HOME=/usr/local/nodejs/default", state: "present" }
-    - { dest: "/etc/profile", regexp: "^PATH=.*NODE_HOME.*", line: "PATH=$PATH:$NODE_HOME/bin", state: "present" }
-
-- name: node.js | Inform the system where node is located and set this one as the default
-  shell: "{{item}}"
-  with_items:
-    - 'update-alternatives --install "/usr/bin/node" "node" "/usr/local/nodejs/default/bin/node" 1'
-    - 'update-alternatives --set node /usr/local/nodejs/default/bin/node'
-
-- name: node.js | Inform the system where npm is located and set this one as the default
-  shell: "{{item}}"
-  with_items:
-    - 'update-alternatives --install "/usr/bin/npm" "npm" "/usr/local/nodejs/default/bin/npm" 1'
-    - 'update-alternatives --set npm /usr/local/nodejs/default/bin/npm'
+- include: update_path.yml

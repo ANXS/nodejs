@@ -1,6 +1,15 @@
 # file: nodejs/defaults/main.yml
 
-nodejs_install_method: "source"
-nodejs_version: "0.10.26"
-nodejs_url: "http://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz"
-nodejs_prefix: "/usr/local/nodejs/node-v{{nodejs_version}}"
+#nodejs_install_method     : "source"
+#nodejs_version            : "0.10.26"
+
+nodejs_install_method     : "binary"
+nodejs_version            : "0.11.13"
+
+nodejs_directory          : "/usr/local/nodejs"
+nodejs_source_url         : "http://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz"
+nodejs_source_prefix      : "{{nodejs_directory}}/node-v{{nodejs_version}}"
+
+# possible achitectures: darwin-x64, darwin-x86, linux-x64, linux-x86, sunos-x64, sunos-x86
+nodejs_binary_url         : "http://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}-{{ansible_system | lower}}-x{{ansible_userspace_bits |replace('32', '86')}}.tar.gz"
+nodejs_binary_prefix      : "{{nodejs_directory}}/node-v{{nodejs_version}}-{{ansible_system | lower}}-x{{ansible_userspace_bits |replace('32', '86')}}"
