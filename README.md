@@ -1,11 +1,11 @@
-## Ansibles - nodejs [![Build Status](https://travis-ci.org/Ansibles/nodejs.png)](https://travis-ci.org/Ansibles/nodejs)
+## ANXS - nodejs [![Build Status](https://travis-ci.org/ANXS/nodejs.png)](https://travis-ci.org/ANXS/nodejs)
 
 Ansible role for installing nodejs, from package or by building it from source.
 
 
 #### Requirements & Dependencies
 - Tested on Ansible 1.4 or higher.
-- Depends on Ansibles.build-essential
+- Depends on ANXS.build-essential
 
 
 #### Variables
@@ -26,4 +26,4 @@ Licensed under the MIT License. See the LICENSE file for details.
 
 #### Feedback, bug-reports, requests, ...
 
-Are [welcome](https://github.com/ansibles/nodejs/issues)!
+Are [welcome](https://github.com/ANXS/nodejs/issues)!
