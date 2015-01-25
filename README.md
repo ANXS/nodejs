@@ -16,7 +16,12 @@ nodejs_version: "0.10.26"           # nodejs version to install.
 ```
 
 #### Thanks to
+- [Nicolas Bazire](https://github.com/nicbaz)
+- [Luís Couto](https://github.com/Couto)
+- [Stephan Hochhaus](https://github.com/yauh)
+- [Nathan Palmer](https://github.com/nathanpalmer)
 - [Manuel Tiago Pereira](https://github.com/mtpereira)
+- [Umair Siddique](https://github.com/umairsiddique)
 
 
 #### License
