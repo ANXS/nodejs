@@ -1,0 +1,20 @@
+# file: nodejs/tasks/update_path.yml
+
+- name: node.js | update_path | Add the node.js binary to the system path
+  lineinfile: "dest={{item.dest}} regexp={{item.regexp}} line={{item.line}} state={{item.state}}"
+  with_items:
+    - { dest: "/etc/profile", regexp: "^NODE_HOME=/usr/local/nodejs/default", line: "NODE_HOME=/usr/local/nodejs/default", state: "present" }
+    - { dest: "/etc/profile", regexp: "^PATH=.*NODE_HOME.*", line: "PATH=$PATH:$NODE_HOME/bin", state: "present" }
+
+- name: node.js | update_path | Inform the system where node is located and set this one as the default
+  shell: "{{item}}"
+  with_items:
+    - 'update-alternatives --install "/usr/bin/node" "node" "/usr/local/nodejs/default/bin/node" 1'
+    - 'update-alternatives --set node /usr/local/nodejs/default/bin/node'
+
+- name: node.js | update_path | Inform the system where npm is located and set this one as the default
+  shell: "{{item}}"
+  with_items:
+    - 'update-alternatives --install "/usr/bin/npm" "npm" "/usr/local/nodejs/default/bin/npm" 1'
+    - 'update-alternatives --set npm /usr/local/nodejs/default/bin/npm'
+

@@ -1,0 +1,29 @@
+# file: nodejs/tasks/binary.yml
+
+- name: node.js | binary | Make sure that the directory to hold the node.js binaries exists
+  file:
+    path: "{{nodejs_binary_prefix}}"
+    state: directory
+    recurse: yes
+    mode: 0755
+
+- name: node.js | binary | Download the node.js binary for your distribution
+  get_url:
+    url: "{{nodejs_binary_url}}"
+    dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
+
+- name: node.js | binary | Unpack the node.js package
+  unarchive:
+    src :  "/tmp/node-v{{nodejs_version}}.tar.gz"
+    dest : "/usr/local/nodejs"
+    copy : no
+
+- name: node.js | binary | Update the symbolic link to the node.js install
+  file:
+    path: "{{nodejs_directory}}/default"
+    src: "{{nodejs_binary_prefix}}"
+    state: link
+    force: yes
+
+- include: update_path.yml
+
