@@ -1,5 +1,12 @@
 # file: nodejs/tasks/source.yml
 
+- name: node.js | source | get packages required to compile from source
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - build-essential
+
 - name: node.js | source | Make sure that the directory to hold the node.js binaries exists
   file:
     path: "{{nodejs_directory}}"
