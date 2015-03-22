@@ -1,10 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+nodejs_install_method = ENV.key?('NODEJS_INSTALL_METHOD') ? ENV['NODEJS_INSTALL_METHOD'] : 'source'
+
 Vagrant.configure('2') do |config|
   config.vm.define 'anxs' do |c|
     c.vm.box = 'ubuntu/trusty64'
-    c.vm.network :private_network, ip: '192.168.88.16'
+    c.vm.network :private_network, ip: '192.168.88.17'
     c.vm.hostname = 'anxs.local'
     c.vm.provision 'ansible' do |ansible|
       ansible.playbook = 'test.yml'
@@ -12,7 +14,7 @@ Vagrant.configure('2') do |config|
       ansible.inventory_path = 'vagrant-inventory'
       ansible.host_key_checking = false
       ansible.extra_vars = {
-        nodejs_install_method: ENV.key?('NODEJS_INSTALL_METHOD') ? ENV['NODEJS_INSTALL_METHOD'] : 'source'
+        nodejs_install_method: nodejs_install_method
       }
     end
   end
