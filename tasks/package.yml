@@ -5,12 +5,27 @@
     pkg: python-pycurl
     state: present
 
-- name: nodejs | Add the nodejs repository
-  apt_repository:
-    repo: ppa:chris-lea/node.js
+- name: node.js | get release
+  shell: lsb_release -c -s
+  register: distro
+
+- name: node.js | add signing key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
+
+- name: node.js | add sources.list entry
+  lineinfile:
+    dest: /etc/apt/sources.list.d/nodesource.list
+    create: yes
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - "deb https://deb.nodesource.com/node {{ distro.stdout }} main"
+    - "deb-src https://deb.nodesource.com/node {{ distro.stdout }} main"
 
 - name: node.js | Install the node.js package
   apt:
     pkg: nodejs={{nodejs_version}}
+    update_cache: yes
     state: present
