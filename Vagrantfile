@@ -5,9 +5,8 @@ nodejs_install_method = ENV.key?('NODEJS_INSTALL_METHOD') ? ENV['NODEJS_INSTALL_
 
 Vagrant.configure('2') do |config|
   config.vm.define 'anxs' do |c|
-    c.vm.box = 'anxs-vbox-linux'
-    c.vm.box_url = 'http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box'
-    c.vm.network :private_network, ip: '192.168.88.2'
+    c.vm.box = 'ubuntu/trusty64'
+    c.vm.network :private_network, ip: '192.168.88.17'
     c.vm.hostname = 'anxs.local'
     c.vm.provision 'ansible' do |ansible|
       ansible.playbook = 'test.yml'
