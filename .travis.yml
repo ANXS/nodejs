@@ -8,6 +8,8 @@ install:
   - pip install ansible==1.6.9
 script:
   - echo localhost > inventory
+  - mkdir -p ~/roles/
+  - ansible-galaxy install -r requirements.yml
   - ansible-playbook -i inventory -e nodejs_install_method=binary test.yml --syntax-check
   - ansible-playbook -i inventory -e nodejs_install_method=binary test.yml --connection=local --sudo
   - >
