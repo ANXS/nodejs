@@ -13,7 +13,9 @@
     dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
 
 - name: node.js | source | Unpack the node.js source
-  shell: tar -xvzf /tmp/node-v{{nodejs_version}}.tar.gz chdir=/tmp creates=/tmp/node-v{{nodejs_version}}
+  unarchive:
+    src: "/tmp/node-v{{nodejs_version}}.tar.gz"
+    dest: "/tmp/node-v{{nodejs_version}}"
 
 - name: node.js | source |Get the number of processors
   command: nproc
