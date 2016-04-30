@@ -1,7 +1,7 @@
 ---
 - hosts: all
-  sudo: True
-  vars_files:
-    - 'defaults/main.yml'
-  tasks:
-    - include: 'tasks/main.yml'
+  sudo: yes
+
+  roles:
+    - .
+
