@@ -4,7 +4,7 @@
   when: nodejs_install_method == "package"
 
 - name: node.js | Check if the node version is already installed
-  command: node --version
+  shell: if hash node 2> /dev/null; then echo $(node --version); fi
   ignore_errors: yes
   register: node_version
   changed_when: node_version.rc != 0 or node_version.stdout != "v{{ nodejs_version }}"
