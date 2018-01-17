@@ -6,6 +6,7 @@
     regexp: '^NODE_HOME={{ nodejs_directory }}/default'
     line: 'NODE_HOME={{ nodejs_directory }}/default'
     state: present
+  when: nodejs_system_paths
 
 - name: mode.js | Add the node binary path to the system path
   lineinfile:
@@ -13,6 +14,7 @@
     regexp: '^PATH=.*NODE_HOME.*'
     line: 'PATH=$PATH:$NODE_HOME/bin'
     state: present
+  when: nodejs_system_paths
 
 - name: node.js | Inform the system where the binaries are located and set as the default
   alternatives:
@@ -22,4 +24,4 @@
   with_items:
     - node
     - npm
-
+  when: nodejs_system_paths

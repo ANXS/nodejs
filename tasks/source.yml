@@ -27,7 +27,7 @@
     cd /tmp/node-v{{nodejs_version}} &&
     ./configure --prefix={{nodejs_source_prefix}} &&
     make -j {{cpu_count.stdout}} &&
-    sudo make install
+    make install
 
 - name: node.js | source | Update the symbolic link to the node.js install
   file:
