@@ -1,26 +1,23 @@
 ---
 language: python
 python: "2.7"
-before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq python-apt python-pycurl
+virtualenv:
+  system_site_packages: true
 env:
   - ROLE_OPTIONS="nodejs_install_method=source"
   - ROLE_OPTIONS="nodejs_install_method=package"
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
-  - pip install -U ansible
-  # Install dependencies
+  - sudo apt-get update -qq
+  - sudo apt-get install python-apt python-pycurl
+  - pip install -U ansible urllib3 pyOpenSSL pyasn1 ndg-httpsclient
   - ansible-galaxy install -r tests/requirements.yml
 script:
   - echo localhost > inventory
-
   # Syntax check
-  - ansible-playbook -i inventory tests/playbook.yml --syntax-check
-
+  - ansible-playbook -i inventory test.yml --syntax-check
   # Play test
-  - ansible-playbook -i inventory tests/playbook.yml --connection=local --sudo -e "$ROLE_OPTIONS"
-
+  - travis_wait 30 ansible-playbook -i inventory test.yml --connection=local --become -e "$ROLE_OPTIONS" -e "ansible_python_interpreter=`which python`"
   # Idempotence test
-  - ansible-playbook -i inventory tests/playbook.yml --connection=local --sudo -e "$ROLE_OPTIONS" > idempotence_out
+  - ansible-playbook -i inventory test.yml --connection=local --become -e "$ROLE_OPTIONS" -e "ansible_python_interpreter=`which python`" | tee idempotence_out
   - ./tests/idempotence_check.sh idempotence_out

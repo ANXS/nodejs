@@ -1,22 +1,19 @@
-# file: nodejs/tasks/update_path.yml
-
-- name: node.js | Add the node installation path to the system path
+---
+- name: "Add the node installation path to the system path"
   lineinfile:
     dest: /etc/profile
     regexp: '^NODE_HOME={{ nodejs_directory }}/default'
     line: 'NODE_HOME={{ nodejs_directory }}/default'
     state: present
   when: nodejs_system_paths
-
-- name: mode.js | Add the node binary path to the system path
+- name: "Add the node binary path to the system path"
   lineinfile:
     dest: /etc/profile
     regexp: '^PATH=.*NODE_HOME.*'
     line: 'PATH=$PATH:$NODE_HOME/bin'
     state: present
   when: nodejs_system_paths
-
-- name: node.js | Inform the system where the binaries are located and set as the default
+- name: "Inform the system where the binaries are located and set as the default"
   alternatives:
     name: "{{ item }}"
     path: "{{ nodejs_directory }}/default/bin/{{ item }}"
