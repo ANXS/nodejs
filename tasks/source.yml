@@ -18,10 +18,16 @@
     src: "/tmp/node-v{{nodejs_version}}.tar.gz"
     dest: "/tmp"
 
-- name: node.js | source |Get the number of processors
+- name: node.js | source |Get the number of processors (Linux)
   command: nproc
   register: cpu_count
+  when: ansible_system == 'Linux'
 
+- name: node.js | source |Get the number of processors (Darwin)
+  command: sysctl -n hw.ncpu
+  register: cpu_count
+  when: ansible_os_family == 'Darwin'
+  
 - name: node.js | source | Build node.js from source
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&

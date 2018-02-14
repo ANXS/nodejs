@@ -16,4 +16,7 @@ galaxy_info:
 
 dependencies:
   - role: ANXS.build-essential
-    when: nodejs_install_method is defined and nodejs_install_method == "source"
+    when: >
+      nodejs_install_method is defined and
+      nodejs_install_method == "source" and
+      ansible_os_family == 'Debian'
