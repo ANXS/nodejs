@@ -18,19 +18,25 @@
     src: "/tmp/node-v{{nodejs_version}}.tar.gz"
     dest: "/tmp"
 
-- name: node.js | source |Get the number of processors (Linux)
+- name: node.js | source | Get the number of processors (Linux)
   command: nproc
-  register: cpu_count
+  register: cpu_count_linux
   when: ansible_system == 'Linux'
 
-- name: node.js | source |Get the number of processors (Darwin)
+- name: node.js | source | Get the number of processors (Darwin)
   command: sysctl -n hw.ncpu
-  register: cpu_count
+  register: cpu_count_darwin
   when: ansible_os_family == 'Darwin'
 
-- name: "TEST PLEASE REMOVE"
-  debug:
-    var: cpu_count
+- name: node.js | source | Set number of processors (Linux)
+  set_fact:
+    cpu_count: "{{cpu_count_linux}}"
+  when: ansible_system == 'Linux'
+
+- name: node.js | source | Set number of processors (Darwin)
+  set_fact:
+    cpu_count: "{{cpu_count_darwin}}"
+  when: ansible_system == 'Darwin'
 
 - name: node.js | source | Build node.js from source
   shell: >

@@ -9,10 +9,11 @@ env:
   - ROLE_OPTIONS="nodejs_install_method=package"
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
-  - pip install -U ansible urllib3
+  - pip install -U ansible
   # Install dependencies
   - ansible-galaxy install -r tests/requirements.yml
 script:
+  - source ~/virtualenv/python2.7/bin/activate
   - echo localhost > inventory
 
   # Syntax check
