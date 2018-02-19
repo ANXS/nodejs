@@ -1,7 +1,6 @@
 ---
 language: python
 python: "2.7"
-group: "edge" # https://github.com/travis-ci/travis-ci/issues/8048
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-apt python-pycurl
@@ -14,7 +13,7 @@ install:
   # Install dependencies
   - ansible-galaxy install -r tests/requirements.yml
 script:
-  - source ~/virtualenv/python2.7/bin/activate
+  - which python ; which pip ; which ansible-playbook
   - echo localhost > inventory
 
   # Syntax check
