@@ -27,7 +27,11 @@
   command: sysctl -n hw.ncpu
   register: cpu_count
   when: ansible_os_family == 'Darwin'
-  
+
+- name: "TEST PLEASE REMOVE"
+  debug:
+    var: cpu_count
+
 - name: node.js | source | Build node.js from source
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&

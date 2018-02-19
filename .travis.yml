@@ -9,7 +9,7 @@ env:
   - ROLE_OPTIONS="nodejs_install_method=package"
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
-  - pip install -U ansible
+  - pip install -U ansible urllib3
   # Install dependencies
   - ansible-galaxy install -r tests/requirements.yml
 script:
