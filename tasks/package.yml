@@ -7,7 +7,8 @@
 
 - name: node.js | add signing key
   apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    url: "{{nodejs_apt_key_url}}"
+    id: "{{nodejs_apt_key}}"
     state: present
 
 - name: node.js | add sources.list entry

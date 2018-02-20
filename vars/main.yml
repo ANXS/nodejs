@@ -1,0 +1,3 @@
+---
+nodejs_apt_key_url: "https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280"
+nodejs_apt_key: "68576280"
