@@ -1,7 +1,7 @@
 ---
 language: python
 python: "2.7"
-distro: ubuntu1604 # apt-key no longer works on 1404
+dist: ubuntu1604 # apt-key no longer works on 1404
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-apt python-pycurl
