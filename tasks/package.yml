@@ -23,6 +23,6 @@
 
 - name: node.js | Install the node.js package
   apt:
-    pkg: "nodejs={{ nodejs_version }}-1nodesource1~{{ ansible_lsb.codename }}1"
+    deb: "{{nodejs_apt_url}}"
     update_cache: yes
     state: present

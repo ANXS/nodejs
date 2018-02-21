@@ -16,11 +16,11 @@ script:
   - echo localhost > inventory
 
   # Syntax check
-  - ansible-playbook -i inventory tests/playbook.yml --syntax-check
+  - ansible-playbook -i inventory test.yml --syntax-check
 
   # Play test
-  - ansible-playbook -i inventory tests/playbook.yml --connection=local --sudo -e "$ROLE_OPTIONS"
+  - travis_wait ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS"
 
   # Idempotence test
-  - ansible-playbook -i inventory tests/playbook.yml --connection=local --sudo -e "$ROLE_OPTIONS" > idempotence_out
+  - ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" > idempotence_out
   - ./tests/idempotence_check.sh idempotence_out
