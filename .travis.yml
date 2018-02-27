@@ -19,7 +19,7 @@ script:
   - ansible-playbook -i inventory test.yml --syntax-check
 
   # Play test
-  - travis_wait ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS"
+  - travis_wait 30 ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" -vvv
 
   # Idempotence test
   - ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" > idempotence_out

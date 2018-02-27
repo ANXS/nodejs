@@ -1,12 +1,5 @@
 # file: nodejs/tasks/binary.yml
 
-- name: node.js | binary | Make sure that the directory to hold the node.js binaries exists
-  file:
-    path: "{{nodejs_binary_prefix}}"
-    state: directory
-    recurse: yes
-    mode: 0755
-
 - name: node.js | binary | Download the node.js binary for your distribution
   get_url:
     url: "{{nodejs_binary_url}}"
