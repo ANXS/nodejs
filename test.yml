@@ -3,8 +3,6 @@
 - hosts: all
   remote_user: root
   become: yes
-  vars:
-    ansible_python_interpreter: "/usr/bin/env python"
   vars_files:
     - "defaults/main.yml"
     - "vars/main.yml"
