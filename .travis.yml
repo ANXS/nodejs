@@ -6,6 +6,7 @@ env:
   - ROLE_OPTIONS="nodejs_install_method=package"
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
+  - echo "what now"
   - sudo apt-get install python-apt
   - pip install -U ansible python-pycurl
   # Install dependencies
