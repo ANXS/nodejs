@@ -6,9 +6,8 @@ env:
   - ROLE_OPTIONS="nodejs_install_method=package"
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
-  - echo "what now"
   - sudo apt-get install python-apt
-  - pip install -U ansible python-pycurl
+  - pip install -U ansible pycurl
   # Install dependencies
   - ansible-galaxy install -r tests/requirements.yml
 script:
