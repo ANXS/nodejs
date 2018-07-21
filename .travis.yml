@@ -6,19 +6,15 @@ env:
   - ROLE_OPTIONS="nodejs_install_method=package"
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
-  - sudo apt-get install python-apt
-  - pip install -U ansible pycurl
-  # Install dependencies
+  - sudo apt-get update -qq
+  - sudo apt-get install python-apt python-pycurl
   - ansible-galaxy install -r tests/requirements.yml
 script:
   - echo localhost > inventory
-
   # Syntax check
   - ansible-playbook -i inventory test.yml --syntax-check
-
   # Play test
-  - travis_wait 30 ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" -vvv -e "ansible_python_interpreter=`which python`"
-
+  - travis_wait 30 ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" -vvv
   # Idempotence test
   - ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" > idempotence_out
   - ./tests/idempotence_check.sh idempotence_out
