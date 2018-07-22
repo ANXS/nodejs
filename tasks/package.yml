@@ -1,5 +1,4 @@
-# file: nodejs/tasks/package.yml
-
+---
 - name: "Make sure the ansible required dependencies are installed"
   apt:
     pkg: python-pycurl
@@ -23,11 +22,11 @@
     line: "{{ item }}"
     state: present
   with_items:
-    - "deb https://deb.nodesource.com/node {{nodejs_arch}} main"
-    - "deb-src https://deb.nodesource.com/node {{nodejs_arch}} main"
+    - "deb https://deb.nodesource.com/{{nodejs_vsn}} {{ansible_lsb.codename}} main"
+    - "deb-src https://deb.nodesource.com/{{nodejs_vsn}} {{ansible_lsb.codename}} main"
 
 - name: "Install the node.js package"
   apt:
-    deb: "{{nodejs_apt_url}}"
+    package: "nodejs"
     update_cache: yes
     state: present

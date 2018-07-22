@@ -19,5 +19,5 @@ script:
   # Play test
   - travis_wait 30 ansible-playbook -i inventory test.yml --connection=local --become -e "$ROLE_OPTIONS" -vvv -e "ansible_python_interpreter=`which python`"
   # Idempotence test
-  - ansible-playbook -i inventory test.yml --connection=local --become -e "$ROLE_OPTIONS" -e "ansible_python_interpreter=`which python`" > idempotence_out
+  - ansible-playbook -i inventory test.yml --connection=local --become -e "$ROLE_OPTIONS" -e "ansible_python_interpreter=`which python`" | tee idempotence_out
   - ./tests/idempotence_check.sh idempotence_out

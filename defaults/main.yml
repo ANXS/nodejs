@@ -1,14 +1,10 @@
-# file: nodejs/defaults/main.yml
-
+---
 nodejs_arch: "{{ansible_architecture}}"
-nodejs_install_method     : "source"
-nodejs_version            : "9.5.0"
-
-nodejs_directory          : "/usr/local/nodejs"
-nodejs_source_url         : "https://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz"
-nodejs_source_prefix      : "{{nodejs_directory}}/node-v{{nodejs_version}}"
-
+nodejs_install_method: "source"
+nodejs_version: "9.5.0"
+nodejs_directory: "/usr/local/nodejs"
+nodejs_source_url: "https://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}.tar.gz"
+nodejs_source_prefix: "{{nodejs_directory}}/node-v{{nodejs_version}}"
 # possible achitectures: darwin-x64, darwin-x86, linux-x64, linux-x86, sunos-x64, sunos-x86
-nodejs_binary_url         : "https://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}-{{ansible_system | lower}}-x{{ansible_userspace_bits |replace('32', '86')}}.tar.gz"
-
+nodejs_binary_url: "https://nodejs.org/dist/v{{nodejs_version}}/node-v{{nodejs_version}}-{{ansible_system | lower}}-x{{ansible_userspace_bits |replace('32', '86')}}.tar.gz"
 nodejs_system_paths: true
