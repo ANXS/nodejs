@@ -1,27 +1,32 @@
 # file: nodejs/tasks/package.yml
 
-- name: Make sure the ansible required dependencies are installed
+- name: "Make sure the ansible required dependencies are installed"
   apt:
     pkg: python-pycurl
     state: present
 
-- name: add signing key
+- name: "add signing key"
   apt_key:
     url: "{{nodejs_apt_key_url}}"
     id: "{{nodejs_apt_key}}"
     state: present
 
-- name: add sources.list entry
+- name: "Set amd64 arch"
+  set_fact:
+    nodejs_arch: "amd64"
+  when: ansible_architecture == "x86_64"
+
+- name: "add sources.list entry"
   lineinfile:
     dest: /etc/apt/sources.list.d/nodesource.list
     create: yes
     line: "{{ item }}"
     state: present
   with_items:
-    - "deb https://deb.nodesource.com/node {{ ansible_lsb.codename }} main"
-    - "deb-src https://deb.nodesource.com/node {{ ansible_lsb.codename }} main"
+    - "deb https://deb.nodesource.com/node {{nodejs_arch}} main"
+    - "deb-src https://deb.nodesource.com/node {{nodejs_arch}} main"
 
-- name: Install the node.js package
+- name: "Install the node.js package"
   apt:
     deb: "{{nodejs_apt_url}}"
     update_cache: yes

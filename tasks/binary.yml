@@ -1,22 +1,21 @@
-# file: nodejs/tasks/binary.yml
-
-- name: Download the node.js binary for your distribution
+---
+- name: "Download the node.js binary for your distribution"
   get_url:
     url: "{{nodejs_binary_url}}"
     dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
 
-- name: Create node.js directory
+- name: "Create node.js directory"
   file:
     path: "/usr/local/nodejs"
     state: directory
     
-- name: Unpack the node.js package
+- name: "Unpack the node.js package"
   unarchive:
     src :  "/tmp/node-v{{nodejs_version}}.tar.gz"
     dest : "/usr/local/nodejs"
     copy : no
 
-- name: Update the symbolic link to the node.js install
+- name: "Update the symbolic link to the node.js install"
   file:
     path: "{{nodejs_directory}}/default"
     src: "{{nodejs_binary_prefix}}"

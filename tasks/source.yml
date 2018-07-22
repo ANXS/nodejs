@@ -1,51 +1,59 @@
-# file: nodejs/tasks/source.yml
-
-- name: Make sure that the directory to hold the node.js binaries exists
+---
+- name: "Make sure that the directory to hold the node.js binaries exists"
   file:
     path: "{{nodejs_directory}}"
     state: directory
     recurse: yes
     mode: 0755
 
-- name: Download the node.js source
+- name: "Download the node.js source"
   get_url:
     url: "{{nodejs_source_url}}"
     dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
 
-- name: Unpack the node.js source
+- name: "Unpack the node.js source"
   unarchive:
     copy: no
     src: "/tmp/node-v{{nodejs_version}}.tar.gz"
     dest: "/tmp"
 
-- name: Get the number of processors (Linux)
+- name: "Get the number of processors (Linux)"
   command: nproc
   register: cpu_count_linux
   when: ansible_system == 'Linux'
+  changed: False
 
-- name: Get the number of processors (Darwin)
+- name: "Get the number of processors (Darwin)"
   command: sysctl -n hw.ncpu
   register: cpu_count_darwin
   when: ansible_os_family == 'Darwin'
+  changed: False
 
-- name: Set number of processors (Linux)
+- name: "Set number of processors (Linux)"
   set_fact:
     cpu_count: "{{cpu_count_linux}}"
   when: ansible_system == 'Linux'
+  changed: False
 
-- name: Set number of processors (Darwin)
+- name: "Set number of processors (Darwin)"
   set_fact:
     cpu_count: "{{cpu_count_darwin}}"
   when: ansible_system == 'Darwin'
 
-- name: Build node.js from source
+- name: "Check for artifact directory"
+  stat:
+    path: "/tmp/node-v{{nodejs_version}}/out/Release"
+  register: node_artifact_check
+
+- name: "Build node.js from source"
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&
     ./configure --prefix={{nodejs_source_prefix}} &&
     make -j {{cpu_count.stdout}} &&
     make install
+  when: not node_artifact_check.stat.exists
 
-- name: Update the symbolic link to the node.js install
+- name: "Update the symbolic link to the node.js install"
   file:
     path: "{{nodejs_directory}}/default"
     src: "{{nodejs_source_prefix}}"

@@ -1,5 +1,6 @@
 # file: nodejs/defaults/main.yml
 
+nodejs_arch: "{{ansible_architecture}}"
 nodejs_install_method     : "source"
 nodejs_version            : "9.5.0"
 
