@@ -4,7 +4,7 @@ galaxy_info:
   author: pjan vandaele
   company: ANXS
   description: "Install nodejs, from package, build from source or download binary tarball"
-  min_ansible_version: 1.4
+  min_ansible_version: 2.3.2
   license: MIT
   platforms:
   - name: Ubuntu
