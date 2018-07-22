@@ -17,5 +17,9 @@
   when: nodejs_install_method == "source"
 - include: source.yml
   when: nodejs_install_method == "source" and nodejs_current_version.changed
+- debug:
+    var: nodejs_current_version
+- debug:
+    var: nodejs_install_method
 - include: binary.yml
   when: nodejs_install_method == "binary" and nodejs_current_version.changed
