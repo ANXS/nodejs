@@ -3,7 +3,7 @@
 - include: package.yml
   when: nodejs_install_method == "package"
 
-- name: node.js | Check if the node version is already installed
+- name: Check if the node version is already installed
   command: "{{nodejs_directory}}/node-v{{nodejs_version}}/bin/node --version"
   ignore_errors: yes
   register: node_version

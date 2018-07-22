@@ -15,7 +15,7 @@ script:
   # Syntax check
   - ansible-playbook -i inventory test.yml --syntax-check
   # Play test
-  - travis_wait 30 /home/travis/virtualenv/python2.7.14/bin/ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" -vvv
+  - travis_wait 30 ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" -vvv -e "ansible_python_interpreter=`which python`"
   # Idempotence test
-  - /home/travis/virtualenv/python2.7.14/bin/ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" > idempotence_out
+  - ansible-playbook -i inventory test.yml --connection=local --sudo -e "$ROLE_OPTIONS" -e "ansible_python_interpreter=`which python`" > idempotence_out
   - ./tests/idempotence_check.sh idempotence_out

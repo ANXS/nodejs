@@ -1,51 +1,51 @@
 # file: nodejs/tasks/source.yml
 
-- name: node.js | source | Make sure that the directory to hold the node.js binaries exists
+- name: Make sure that the directory to hold the node.js binaries exists
   file:
     path: "{{nodejs_directory}}"
     state: directory
     recurse: yes
     mode: 0755
 
-- name: node.js | source | Download the node.js source
+- name: Download the node.js source
   get_url:
     url: "{{nodejs_source_url}}"
     dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
 
-- name: node.js | source | Unpack the node.js source
+- name: Unpack the node.js source
   unarchive:
     copy: no
     src: "/tmp/node-v{{nodejs_version}}.tar.gz"
     dest: "/tmp"
 
-- name: node.js | source | Get the number of processors (Linux)
+- name: Get the number of processors (Linux)
   command: nproc
   register: cpu_count_linux
   when: ansible_system == 'Linux'
 
-- name: node.js | source | Get the number of processors (Darwin)
+- name: Get the number of processors (Darwin)
   command: sysctl -n hw.ncpu
   register: cpu_count_darwin
   when: ansible_os_family == 'Darwin'
 
-- name: node.js | source | Set number of processors (Linux)
+- name: Set number of processors (Linux)
   set_fact:
     cpu_count: "{{cpu_count_linux}}"
   when: ansible_system == 'Linux'
 
-- name: node.js | source | Set number of processors (Darwin)
+- name: Set number of processors (Darwin)
   set_fact:
     cpu_count: "{{cpu_count_darwin}}"
   when: ansible_system == 'Darwin'
 
-- name: node.js | source | Build node.js from source
+- name: Build node.js from source
   shell: >
     cd /tmp/node-v{{nodejs_version}} &&
     ./configure --prefix={{nodejs_source_prefix}} &&
     make -j {{cpu_count.stdout}} &&
     make install
 
-- name: node.js | source | Update the symbolic link to the node.js install
+- name: Update the symbolic link to the node.js install
   file:
     path: "{{nodejs_directory}}/default"
     src: "{{nodejs_source_prefix}}"

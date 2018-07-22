@@ -1,17 +1,17 @@
 # file: nodejs/tasks/package.yml
 
-- name: node.js | Make sure the ansible required dependencies are installed
+- name: Make sure the ansible required dependencies are installed
   apt:
     pkg: python-pycurl
     state: present
 
-- name: node.js | add signing key
+- name: add signing key
   apt_key:
     url: "{{nodejs_apt_key_url}}"
     id: "{{nodejs_apt_key}}"
     state: present
 
-- name: node.js | add sources.list entry
+- name: add sources.list entry
   lineinfile:
     dest: /etc/apt/sources.list.d/nodesource.list
     create: yes
@@ -21,7 +21,7 @@
     - "deb https://deb.nodesource.com/node {{ ansible_lsb.codename }} main"
     - "deb-src https://deb.nodesource.com/node {{ ansible_lsb.codename }} main"
 
-- name: node.js | Install the node.js package
+- name: Install the node.js package
   apt:
     deb: "{{nodejs_apt_url}}"
     update_cache: yes
