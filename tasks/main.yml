@@ -1,8 +1,6 @@
-# file: nodejs/tasks/main.yml
-
+---
 - include: package.yml
   when: nodejs_install_method == "package"
-
 - name: Check if the node version is already installed
   command: "{{nodejs_binary_prefix}}/bin/node --version"
   ignore_errors: yes
@@ -10,7 +8,6 @@
   register: nodejs_current_version
   changed_when: nodejs_current_version.rc != 0 or nodejs_current_version.stdout.find(nodejs_version) < 0
   when: nodejs_install_method == "binary"
-
 - name: Check if the node version is already installed
   command: "{{nodejs_directory}}/node-v{{nodejs_version}}/bin/node --version"
   ignore_errors: yes
@@ -18,9 +15,7 @@
   register: nodejs_current_version
   changed_when: nodejs_current_version.rc != 0 or nodejs_current_version.stdout.find(nodejs_version) < 0
   when: nodejs_install_method == "source"
-
 - include: source.yml
   when: nodejs_install_method == "source" and nodejs_current_version.changed
-
 - include: binary.yml
   when: nodejs_install_method == "binary" and nodejs_current_version.changed

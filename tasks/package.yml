@@ -3,13 +3,11 @@
   apt:
     pkg: python-pycurl
     state: present
-
 - name: "add signing key"
   apt_key:
     url: "{{nodejs_apt_key_url}}"
     id: "{{nodejs_apt_key}}"
     state: present
-
 - name: "add sources.list entry"
   lineinfile:
     dest: /etc/apt/sources.list.d/nodesource.list
@@ -19,7 +17,6 @@
   with_items:
     - "deb {{nodejs_apt_url}} {{ansible_lsb.codename}} main"
     - "deb-src {{nodejs_apt_url}} {{ansible_lsb.codename}} main"
-
 - name: "Install the node.js package"
   apt:
     package: "nodejs"
