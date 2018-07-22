@@ -21,19 +21,19 @@
   command: nproc
   register: cpu_count_linux
   when: ansible_system == 'Linux'
-  changed: False
+  changed_when: False
 
 - name: "Get the number of processors (Darwin)"
   command: sysctl -n hw.ncpu
   register: cpu_count_darwin
   when: ansible_os_family == 'Darwin'
-  changed: False
+  changed_when: False
 
 - name: "Set number of processors (Linux)"
   set_fact:
     cpu_count: "{{cpu_count_linux}}"
   when: ansible_system == 'Linux'
-  changed: False
+  changed_when: False
 
 - name: "Set number of processors (Darwin)"
   set_fact:

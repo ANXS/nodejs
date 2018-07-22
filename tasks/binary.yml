@@ -7,7 +7,7 @@
 - name: "Create node.js directory"
   file:
     path: "/usr/local/nodejs"
-    state: directory
+    state: "directory"
     
 - name: "Unpack the node.js package"
   unarchive:
@@ -19,7 +19,7 @@
   file:
     path: "{{nodejs_directory}}/default"
     src: "{{nodejs_binary_prefix}}"
-    state: link
+    state: "link"
     force: yes
 
 - include: update_path.yml
