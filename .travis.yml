@@ -7,7 +7,7 @@ env:
   - ROLE_OPTIONS="nodejs_install_method=binary"
 install:
   - sudo apt-get update -qq
-  - sudo apt-get install python-apt python-pycurl
+  - sudo apt-get install python-apt python-pycurl ansible
   - ansible-galaxy install -r tests/requirements.yml
 script:
   - echo localhost > inventory
