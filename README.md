@@ -4,7 +4,7 @@ Ansible role for installing nodejs, from package or by building it from source.
 
 
 #### Requirements & Dependencies
-- Tested on Ansible 1.4 or higher.
+- Tested on Ansible 2.3.2 or higher.
 - Depends on ANXS.build-essential when using install_method of "source"
 
 #### Variables
