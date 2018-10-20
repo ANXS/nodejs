@@ -1,10 +1,9 @@
-# file: xxx/meta/main.yml
-
+---
 galaxy_info:
   author: pjan vandaele
   company: ANXS
   description: "Install nodejs, from package, build from source or download binary tarball"
-  min_ansible_version: 1.4
+  min_ansible_version: 2.3.2
   license: MIT
   platforms:
   - name: Ubuntu
@@ -16,4 +15,7 @@ galaxy_info:
 
 dependencies:
   - role: ANXS.build-essential
-    when: nodejs_install_method is defined and nodejs_install_method == "source"
+    when: >
+      nodejs_install_method is defined and
+      nodejs_install_method == "source" and
+      ansible_os_family == 'Debian'

@@ -1,0 +1,6 @@
+---
+nodejs_apt_key_url: "https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280"
+nodejs_apt_key: "68576280"
+nodejs_binary_prefix: "{{nodejs_directory}}/node-v{{nodejs_version}}-{{ansible_system|lower}}-x{{ansible_userspace_bits|replace('32', '86')}}"
+nodejs_major_version: "{{nodejs_version.split('.')[0]}}"
+nodejs_apt_url: "https://deb.nodesource.com/node_{{nodejs_major_version}}.x"
