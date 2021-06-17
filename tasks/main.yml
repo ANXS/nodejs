@@ -1,21 +1,29 @@
 ---
 - include: package.yml
   when: nodejs_install_method == "package"
-- name: Check if the node version is already installed
+
+- name: "Check if the node version is already installed via binary"
   command: "{{nodejs_binary_prefix}}/bin/node --version"
-  ignore_errors: yes
-  failed_when: no
+  ignore_errors: true
+  failed_when: false
   register: nodejs_binary_version
-  changed_when: nodejs_binary_version.rc != 0 or nodejs_binary_version.stdout.find(nodejs_version) < 0
+  changed_when: >
+    nodejs_binary_version.rc != 0 or
+    nodejs_binary_version.stdout.find(nodejs_version) < 0
   when: nodejs_install_method == "binary"
-- name: Check if the node version is already installed
+
+- name: "Check if the node version is already installed via source"
   command: "{{nodejs_directory}}/node-v{{nodejs_version}}/bin/node --version"
-  ignore_errors: yes
-  failed_when: no  
+  ignore_errors: true
+  failed_when: false
   register: nodejs_source_version
-  changed_when: nodejs_source_version.rc != 0 or nodejs_source_version.stdout.find(nodejs_version) < 0
+  changed_when: >
+    nodejs_source_version.rc != 0 or
+    nodejs_source_version.stdout.find(nodejs_version) < 0
   when: nodejs_install_method == "source"
+
 - include: source.yml
   when: nodejs_install_method == "source" and nodejs_source_version.changed
+
 - include: binary.yml
   when: nodejs_install_method == "binary" and nodejs_binary_version.changed

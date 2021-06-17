@@ -3,51 +3,67 @@
   file:
     path: "{{nodejs_directory}}"
     state: directory
-    recurse: yes
+    recurse: true
     mode: 0755
+
 - name: "Download the node.js source"
   get_url:
     url: "{{nodejs_source_url}}"
-    dest: "/tmp/node-v{{nodejs_version}}.tar.gz"
+    dest: "{{nodejs_archive}}"
+
 - name: "Unpack the node.js source"
   unarchive:
-    copy: no
-    src: "/tmp/node-v{{nodejs_version}}.tar.gz"
-    dest: "/tmp"
+    copy: false
+    src: "{{nodejs_archive}}"
+    dest: "{{nodejs_cache_dir}}"
+
 - name: "Get the number of processors (Linux)"
   command: nproc
   register: cpu_count_linux
   when: ansible_system == 'Linux'
-  changed_when: False
+  changed_when: false
+
 - name: "Get the number of processors (Darwin)"
   command: sysctl -n hw.ncpu
   register: cpu_count_darwin
   when: ansible_os_family == 'Darwin'
-  changed_when: False
+  changed_when: false
+
 - name: "Set number of processors (Linux)"
   set_fact:
     cpu_count: "{{cpu_count_linux}}"
   when: ansible_system == 'Linux'
-  changed_when: False
+  changed_when: false
+
 - name: "Set number of processors (Darwin)"
   set_fact:
     cpu_count: "{{cpu_count_darwin}}"
   when: ansible_system == 'Darwin'
+
 - name: "Check for artifact directory"
   stat:
-    path: "/tmp/node-v{{nodejs_version}}/out/Release"
+    path: "{{nodejs_cache_dir}}/node-v{{nodejs_version}}/out/Release"
   register: node_artifact_check
+
+- name: "Check for installed directory"
+  stat:
+    path: "{{nodejs_source_prefix}}"
+  register: node_install_check
+
 - name: "Build node.js from source"
   shell: >
-    cd /tmp/node-v{{nodejs_version}} &&
+    cd {{nodejs_cache_dir}}/node-v{{nodejs_version}} &&
     ./configure --prefix={{nodejs_source_prefix}} &&
     make -j {{cpu_count.stdout}} &&
     make install
-  when: not node_artifact_check.stat.exists
+  when: >
+    not node_install_check.stat.exists
+
 - name: "Update the symbolic link to the node.js install"
   file:
     path: "{{nodejs_directory}}/default"
     src: "{{nodejs_source_prefix}}"
     state: link
-    force: yes
+    force: true
+
 - include: update_path.yml
